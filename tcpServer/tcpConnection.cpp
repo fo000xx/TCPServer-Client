@@ -13,7 +13,6 @@ void tcpConnection::startConn()
 {
     readIncoming();
     
-    //one to read an inMessage (and do something)
     writeOutgoing();
 }
 
@@ -25,9 +24,7 @@ void tcpConnection::handleWrite(const boost::system::error_code& errorMessage)
 }
 
 void tcpConnection::readIncoming()
-{
-    mReceiveBuffer.consume(mReceiveBuffer.size());
-    
+{   
     boost::asio::async_read_until(mSocket, mReceiveBuffer, '\n', 
             boost::bind(&tcpConnection::readHandler, shared_from_this(), 
             boost::asio::placeholders::error));
