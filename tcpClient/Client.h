@@ -16,12 +16,14 @@ public:
 
     void receiveConfirmation(boost::system::error_code& error);
     void sendMessage();
+    void userInputMessage();
 
 private:
     std::string mIPAddr;
     int mPortNum;
     tcp::socket mSocket;
     boost::asio::streambuf mReceiveBuffer;
+    std::string mUserInput{ "defaultHello\n" };
 };
 
 #endif

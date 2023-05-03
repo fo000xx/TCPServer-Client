@@ -28,8 +28,13 @@ void Client::receiveConfirmation(boost::system::error_code& error)
 
 void Client::sendMessage()
 {
-    std::string outMessage( "Hello1\n");
-
+    std::string outMessage;
+    if (mUserInput != "defaultHello\n") {
+        outMessage = mUserInput;
+    }
+    else {
+        outMessage =  "Default Message\n";
+    }
     boost::system::error_code sendError;
     boost::asio::write(mSocket, boost::asio::buffer(outMessage), sendError);
 
@@ -41,4 +46,11 @@ void Client::sendMessage()
     }
 
     receiveConfirmation(sendError);
+}
+
+void Client::userInputMessage()
+{
+    std::cout << "Enter a message for the server: ";
+    std::getline(std::cin, mUserInput);
+    mUserInput += '\n';
 }

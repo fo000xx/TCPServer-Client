@@ -10,12 +10,10 @@ int main()
 {
     std::string ipAddr("127.0.0.1");
     boost::asio::io_context ioContext;
-    Client client1(ipAddr, 1234, ioContext);
-    Client client2(ipAddr, 1234, ioContext);
-    Client client3(ipAddr, 1234, ioContext);
-    client1.sendMessage();
-    client2.sendMessage();
-    client3.sendMessage();
+    Client client(ipAddr, 1234, ioContext);
+
+    client.userInputMessage();
+    client.sendMessage();
 
     return 0;
 }
