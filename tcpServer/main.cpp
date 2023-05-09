@@ -9,16 +9,6 @@
 
 using namespace boost::asio::ip;
 
-void printCmd(tcpServer& server)
-{
-    while (true) {
-        //if empty, sleep
-        std::cout << server.getNextCmd();
-        std::this_thread::sleep_for(std::chrono::seconds(5));
-    }
-}
-
-//std::thread t1(printCmd, std::ref(server));
 int main()
 {
     try {
