@@ -21,6 +21,7 @@ public:
     }
 
     std::deque<std::string>& getCmdQ(){ return mCommandQueue; }
+    std::string getNextCmd();
 
 private:
     void startAccept();

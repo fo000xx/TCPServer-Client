@@ -33,9 +33,8 @@ void tcpConnection::readIncoming()
 
 void tcpConnection::readHandler(const boost::system::error_code& error)
 {
-        if (!error) {
+    if (!error) {
         std::string receivedMsg{ boost::asio::buffer_cast<const char*>(mReceiveBuffer.data()) };
-        std::cout << receivedMsg;
         mServer.getCmdQ().push_back(receivedMsg);
     }
     else {
@@ -45,8 +44,7 @@ void tcpConnection::readHandler(const boost::system::error_code& error)
 
 void tcpConnection::writeOutgoing()
 {
-    //output mResponse!
-    std::string outMessage{ "hello from server\n"};
+    std::string outMessage{ "Message Received\n"};
 
     boost::asio::async_write(mSocket, boost::asio::buffer(outMessage), 
         boost::bind(&tcpConnection::handleWrite, shared_from_this(),

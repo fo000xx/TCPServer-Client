@@ -16,6 +16,15 @@ void tcpServer::handleAccept(tcpConnection::shrdPtr newConnection, const boost::
     if (!error) {
         newConnection->startConn();
     }
-    
+
     startAccept();
+}
+
+std::string tcpServer::getNextCmd()
+{
+    std::string cmdString { mCommandQueue[0] };
+
+    mCommandQueue.pop_front();
+
+    return cmdString;
 }
