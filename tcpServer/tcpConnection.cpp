@@ -1,5 +1,6 @@
 #include <boost/asio/placeholders.hpp>
 #include <iostream>
+#include <thread>
 #include "tcpConnection.h"
 #include "tcpServer.h"
 
@@ -44,9 +45,17 @@ void tcpConnection::readHandler(const boost::system::error_code& error)
 
 void tcpConnection::writeOutgoing()
 {
-    std::string outMessage{ "Message Received\n"};
+    //while(mServer.getResponse().empty()) {
+    //    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+    //}
+    std::string_view outMessage{ mServer.getResponse() };
 
     boost::asio::async_write(mSocket, boost::asio::buffer(outMessage), 
         boost::bind(&tcpConnection::handleWrite, shared_from_this(),
         boost::asio::placeholders::error));
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+
+    std::string response{""};
+    mServer.setResponse(response);
 }

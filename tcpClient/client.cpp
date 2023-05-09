@@ -14,8 +14,6 @@ Client::Client(std::string& ipAddr, int portNum, boost::asio::io_context& ioCont
 
 void Client::receiveConfirmation(boost::system::error_code& error)
 {
-    mReceiveBuffer.consume(mReceiveBuffer.size());
-
     boost::asio::read(mSocket, mReceiveBuffer, boost::asio::transfer_all(), error);
     if (error && error != boost::asio::error::eof) {
         std::cout << "receive failed: " << error.message() << '\n';
@@ -50,7 +48,7 @@ void Client::sendMessage()
 
 void Client::userInputMessage()
 {
-    std::cout << "Enter a message for the server: (set, get, del)";
+    std::cout << "Enter a message for the server: (set, get, del) ";
     std::getline(std::cin, mUserInput);
     mUserInput += '\n';
 }

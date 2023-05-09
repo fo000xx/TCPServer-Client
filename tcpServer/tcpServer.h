@@ -21,6 +21,8 @@ public:
     }
 
     std::deque<std::string>& getCmdQ(){ return mCommandQueue; }
+    void setResponse(std::string response) { mResponse = response; }
+    std::string& getResponse() { return mResponse; }
     std::string getNextCmd();
 
 private:
@@ -30,6 +32,7 @@ private:
     boost::asio::io_context& mIOContext;
     tcp::acceptor mAcceptor;
     std::deque<std::string> mCommandQueue{};
+    std::string mResponse{};
 
 };
 
