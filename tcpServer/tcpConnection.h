@@ -5,6 +5,7 @@
 #include <boost/asio/io_context.hpp>
 #include <boost/bind/bind.hpp>
 
+class tcpServer;
 using namespace boost::asio::ip;
 
 class tcpConnection : public std::enable_shared_from_this<tcpConnection>
@@ -12,13 +13,17 @@ class tcpConnection : public std::enable_shared_from_this<tcpConnection>
 public:
     using shrdPtr = std::shared_ptr<tcpConnection>;
 
-    static shrdPtr createConnection(boost::asio::io_context& ioContext);
+    static shrdPtr createConnection(boost::asio::io_context& ioContext, tcpServer& server);
     void startConn();
     tcp::socket& getSocket() { return mSocket; }
+    void doSet(std::string& value);
+    void doGet();
+    void doDel();
 
 private:
-    tcpConnection(boost::asio::io_context& ioContext)
+    tcpConnection(boost::asio::io_context& ioContext, tcpServer& server)
         : mSocket(ioContext)
+        , mServer{ server }
     {
     }
 
@@ -29,6 +34,7 @@ private:
 
     tcp::socket mSocket;
     boost::asio::streambuf mReceiveBuffer;
+    tcpServer& mServer;
 };
 
 #endif

@@ -1,12 +1,13 @@
 #include <boost/asio/placeholders.hpp>
 #include <iostream>
 #include "tcpConnection.h"
+#include "tcpServer.h"
 
 using shrdPtr = std::shared_ptr<tcpConnection>;
 
-shrdPtr tcpConnection::createConnection(boost::asio::io_context& ioContext)
+shrdPtr tcpConnection::createConnection(boost::asio::io_context& ioContext, tcpServer& server)
 {
-    return shrdPtr(new tcpConnection(ioContext));
+    return shrdPtr(new tcpConnection(ioContext, server));
 }
 
 void tcpConnection::startConn()
@@ -33,8 +34,9 @@ void tcpConnection::readIncoming()
 void tcpConnection::readHandler(const boost::system::error_code& error)
 {
     if (!error) {
-        std::string_view receivedMsg{ boost::asio::buffer_cast<const char*>(mReceiveBuffer.data()) };
+        std::string receivedMsg{ boost::asio::buffer_cast<const char*>(mReceiveBuffer.data()) };
         std::cout << receivedMsg;
+        mServer.getCmdQ().push_back(receivedMsg);
     }
     else {
         std::cout << error.message() << '\n';
@@ -43,6 +45,7 @@ void tcpConnection::readHandler(const boost::system::error_code& error)
 
 void tcpConnection::writeOutgoing()
 {
+    //output mResponse!
     std::string outMessage{ "hello from server\n"};
 
     boost::asio::async_write(mSocket, boost::asio::buffer(outMessage), 

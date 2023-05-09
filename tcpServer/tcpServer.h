@@ -4,6 +4,7 @@
 #include <boost/asio.hpp>
 #include <boost/asio/io_context.hpp>
 #include <boost/bind/bind.hpp>
+#include <deque>
 #include "tcpConnection.h"
 
 using namespace boost::asio::ip;
@@ -19,13 +20,17 @@ public:
         startAccept();
     }
 
+    std::deque<std::string>& getCmdQ(){ return mCommandQueue; }
+
 private:
     void startAccept();
     void handleAccept(tcpConnection::shrdPtr newConnection, const boost::system::error_code& error);
 
 
     boost::asio::io_context& mIOContext;
-    tcp::acceptor mAcceptor;   
+    tcp::acceptor mAcceptor;
+    std::deque<std::string> mCommandQueue{};
+
 };
 
 #endif

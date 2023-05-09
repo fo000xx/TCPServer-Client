@@ -1,10 +1,11 @@
 #include <boost/asio/placeholders.hpp>
+#include <iostream>
 #include "tcpConnection.h"
 #include "tcpServer.h"
 
 void tcpServer::startAccept()
 {
-    tcpConnection::shrdPtr newConnection{ tcpConnection::createConnection(mIOContext) };
+    tcpConnection::shrdPtr newConnection{ tcpConnection::createConnection(mIOContext, *this) };
 
     mAcceptor.async_accept(newConnection->getSocket(), 
         boost::bind(&tcpServer::handleAccept, this, newConnection, boost::asio::placeholders::error));

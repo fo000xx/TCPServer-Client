@@ -50,7 +50,7 @@ void Client::sendMessage()
 
 void Client::userInputMessage()
 {
-    std::cout << "Enter a message for the server: ";
+    std::cout << "Enter a message for the server: (set, get, del)";
     std::getline(std::cin, mUserInput);
     mUserInput += '\n';
 }
