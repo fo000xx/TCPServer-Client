@@ -16,6 +16,6 @@ void tcpServer::handleAccept(tcpConnection::shrdPtr newConnection, const boost::
     if (!error) {
         newConnection->startConn();
     }
-
+    
     startAccept();
 }

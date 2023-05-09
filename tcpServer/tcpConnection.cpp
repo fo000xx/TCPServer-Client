@@ -33,7 +33,7 @@ void tcpConnection::readIncoming()
 
 void tcpConnection::readHandler(const boost::system::error_code& error)
 {
-    if (!error) {
+        if (!error) {
         std::string receivedMsg{ boost::asio::buffer_cast<const char*>(mReceiveBuffer.data()) };
         std::cout << receivedMsg;
         mServer.getCmdQ().push_back(receivedMsg);
