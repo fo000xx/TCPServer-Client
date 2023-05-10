@@ -37,7 +37,7 @@ void Client::sendMessage()
     boost::asio::write(mSocket, boost::asio::buffer(outMessage), sendError);
 
     if (!sendError) {
-        std::cout << "Client sent hello message!\n";
+        std::cout << "Client sent command!\n";
     }
     else {
         std::cout << "send failed: " << sendError.message() << '\n';

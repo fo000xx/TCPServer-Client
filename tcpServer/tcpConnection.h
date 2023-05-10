@@ -24,14 +24,19 @@ private:
     {
     }
 
-    void handleWrite(const boost::system::error_code& errorMessage);
     void readIncoming();
     void readHandler(const boost::system::error_code& error);
+    void confirmConnection();
+    void parseAndActionCommand();
     void writeOutgoing();
+    void writeHandler(const boost::system::error_code& errorMessage);
 
     tcp::socket mSocket;
     boost::asio::streambuf mReceiveBuffer;
     tcpServer& mServer;
+    std::string mReceivedMsg;
+    std::string_view mResponse;
+
 };
 
 #endif
