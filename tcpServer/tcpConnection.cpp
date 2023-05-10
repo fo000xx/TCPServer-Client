@@ -84,7 +84,8 @@ void tcpConnection::parseAndActionCommand()
         mResponse = ("invalid command");
     }
     
-    writeOutgoing();
+    writeOutgoing(); //message needs to be sent AFTER actions are completed.
+    //for testing
     for (auto elem : gDemoMap::DemoMap) { std::cout << elem.first << " " << elem.second << '\n'; }
 }
 
